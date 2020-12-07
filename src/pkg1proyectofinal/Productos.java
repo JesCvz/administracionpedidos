@@ -32,11 +32,11 @@ Connection con = null;
         this.setLocation(200,100);
         this.setResizable(false);
          try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866";  
-            
-               Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 if(con!=null)
                     System.out.println("Se ha estableciso una conexion con la base de datos"+"\n"+url);
@@ -76,11 +76,11 @@ Connection con = null;
      
      try { 
          String valor = tabla_pro.getValueAt((fila-1), 0).toString();
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866";  
-            
-               Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                   con = DriverManager.getConnection(url,usuario,contraseña); 
                   if ( con != null ) 
                     System.out.println("Se ha establecido una conexión a la base de datos " +  
@@ -116,11 +116,11 @@ Connection con = null;
 public void refresh()
 {
   try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866";  
-            
-               Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 if(con!=null)
                     System.out.println("Se ha estableciso una conexion con la base de datos"+"\n"+url);
@@ -161,11 +161,11 @@ public void consultar()
      
      try { 
          String valor = tabla_pro.getValueAt((fila-1), 0).toString();
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866";  
-            
-               Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                   con = DriverManager.getConnection(url,usuario,contraseña); 
                   if ( con != null ) 
                     System.out.println("Se ha establecido una conexión a la base de datos " +  
@@ -323,6 +323,7 @@ public void consultar()
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked

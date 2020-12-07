@@ -37,20 +37,20 @@ public class TABLACLI extends javax.swing.JFrame {
         this.setLocation(200, 100);
         this.setResizable(false);
          try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-                  
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 if(con!=null)
                     System.out.println("Se ha estableciso una conexion con la base de datos"+"\n"+url);
                 stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("Select* from clientes");
+                ResultSet rs = stmt.executeQuery("select* from clientes where idclientes != '"+"999999"+"'");
                 
                 modelo = new DefaultTableModel(null,titulos);
                 while(rs.next()){
-                    fila[0]=rs.getString("mem_cli");
+                    fila[0]=rs.getString("idclientes");
                     fila[1]=rs.getString("nom_cli");
                                      
                     modelo.addRow(fila);
@@ -84,26 +84,26 @@ public class TABLACLI extends javax.swing.JFrame {
      
      try { 
          String valor = tabla_cli.getValueAt((fila-1), 0).toString();
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-                  
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                   con = DriverManager.getConnection(url,usuario,contraseña); 
                   if ( con != null ) 
                     System.out.println("Se ha establecido una conexión a la base de datos " +  
                                        "\n " + url ); 
   
                   stmt = con.createStatement(); 
-                  ResultSet rs = stmt.executeQuery("select* from clientes where mem_cli = '"+valor+"'");
+                  ResultSet rs = stmt.executeQuery("select* from clientes where idclientes = '"+valor+"'");
                   
                   while(rs.next())
                   {
-                      txtmemTAB.setText(rs.getString("mem_cli"));
+                      txtmemTAB.setText(rs.getString("idclientes"));
                       txtnomTAB.setText(rs.getString("nom_cli"));
                   }
-                 RegistrosPed.txtmemloc.setText(txtmemTAB.getText());
-                 RegistrosPed.txtnomloc.setText(txtnomTAB.getText());
+                 newPed_Reg.txtmemloc.setText(txtmemTAB.getText());
+                 newPed_Reg.txtnomloc.setText(txtnomTAB.getText());
                     } 
                   catch( SQLException e ) { 
                       e.printStackTrace(); 
@@ -130,20 +130,20 @@ public class TABLACLI extends javax.swing.JFrame {
     public void refresh()
     {
          try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-                  
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance(); 
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 if(con!=null)
                     System.out.println("Se ha estableciso una conexion con la base de datos"+"\n"+url);
                 stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("Select* from clientes");
+                ResultSet rs = stmt.executeQuery("select* from clientes where idclientes != '"+"999999"+"'");
                 
                 modelo = new DefaultTableModel(null,titulos);
                 while(rs.next()){
-                    fila[0]=rs.getString("mem_cli");
+                    fila[0]=rs.getString("idclientes");
                     fila[1]=rs.getString("nom_cli");
                                      
                     modelo.addRow(fila);

@@ -164,6 +164,11 @@ public class RegistrosEmp extends javax.swing.JFrame {
                 jButton4MouseClicked(evt);
             }
         });
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 85, 29));
 
         jButton3.setText("Limpiar");
@@ -189,12 +194,11 @@ public class RegistrosEmp extends javax.swing.JFrame {
             
    try { 
        
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-                  
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
-     
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
      
      con = DriverManager.getConnection(url,usuario,contraseña); 
 
@@ -286,11 +290,11 @@ public class RegistrosEmp extends javax.swing.JFrame {
      else {   
      
      try { 
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-                  
-                  Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance(); 
                   con = DriverManager.getConnection(url,usuario,contraseña); 
                   if ( con != null ) 
                     System.out.println("Se ha establecido una conexión a la base de datos " +  
@@ -354,11 +358,11 @@ public class RegistrosEmp extends javax.swing.JFrame {
      else {
         try {
            
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-            
-             Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance(); 
              con = DriverManager.getConnection(url,usuario,contraseña); 
              if ( con != null ) 
                     System.out.println("Se ha establecido una conexión a la base de datos " +  
@@ -503,6 +507,10 @@ public class RegistrosEmp extends javax.swing.JFrame {
         }
         if((c<'a' || c>'z') && (c<'A' || c> 'Z') && (c<' ' || c> ' ') && (c<'0' || c> '9')) evt.consume();
     }//GEN-LAST:event_txtpasswordempKeyTyped
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

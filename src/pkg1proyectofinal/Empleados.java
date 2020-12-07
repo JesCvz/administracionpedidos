@@ -34,17 +34,17 @@ public class Empleados extends javax.swing.JFrame {
         
         try {
             
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866";  
-            
-               Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                con = DriverManager.getConnection(url,usuario,contraseña);
                if (con!= null)
                    System.out.println("Se ha establecido una conexion a la base de datos"+"\n"+url);
                
                stmt = con.createStatement();
-               ResultSet rs = stmt.executeQuery("select* from empleados");
+               ResultSet rs = stmt.executeQuery("select* from empleados where num_emp != '"+"999999"+"'");
                
                modelo = new DefaultTableModel(null,titulos);
                
@@ -218,6 +218,7 @@ public class Empleados extends javax.swing.JFrame {
         getContentPane().add(txtnumemp, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 250, 100, 30));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 public void borrar() {           
     int fila = tabla_emp.getSelectedRow()+1;
@@ -232,11 +233,11 @@ public void borrar() {
      
      try { 
          String valor = tabla_emp.getValueAt((fila-1), 0).toString();
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-                  
-                  Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                   con = DriverManager.getConnection(url,usuario,contraseña); 
                   if ( con != null ) 
                     System.out.println("Se ha establecido una conexión a la base de datos " +  
@@ -272,18 +273,17 @@ public void borrar() {
 public void refresh()
 {
     try {
-            
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-            
-               Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                con = DriverManager.getConnection(url,usuario,contraseña);
                if (con!= null)
                    System.out.println("Se ha establecido una conexion a la base de datos"+"\n"+url);
                
                stmt = con.createStatement();
-               ResultSet rs = stmt.executeQuery("select* from empleados");
+               ResultSet rs = stmt.executeQuery("select* from empleados where num_emp != '"+"999999"+"'");
                
                modelo = new DefaultTableModel(null,titulos);
             
@@ -332,11 +332,11 @@ public void consultar()
      
      try { 
          String valor = tabla_emp.getValueAt((fila-1), 0).toString();
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-                  
-                  Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                   con = DriverManager.getConnection(url,usuario,contraseña); 
                   if ( con != null ) 
                     System.out.println("Se ha establecido una conexión a la base de datos " +  

@@ -35,11 +35,11 @@ public class TABLAPRO extends javax.swing.JFrame {
         this.setLocation(200, 100);
         this.setResizable(false);
          try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-                  
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance(); 
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 if(con!=null)
                     System.out.println("Se ha estableciso una conexion con la base de datos"+"\n"+url);
@@ -83,11 +83,11 @@ public class TABLAPRO extends javax.swing.JFrame {
      
      try { 
          String valor = tabla_pro.getValueAt((fila-1), 0).toString();
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-                  
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();  
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance(); 
                   con = DriverManager.getConnection(url,usuario,contraseña); 
                   if ( con != null ) 
                     System.out.println("Se ha establecido una conexión a la base de datos " +  
@@ -102,9 +102,9 @@ public class TABLAPRO extends javax.swing.JFrame {
                       txtdescloc.setText(rs.getString("desc_pro"));
                       txtprecioloc.setText(rs.getString("precio_pro"));
                   }
-                    RegistrosPed.txtitemped.setText(txtitemloc.getText());
-                    RegistrosPed.txtdescped.setText(txtdescloc.getText());
-                    RegistrosPed.txtprecioped.setText(txtprecioloc.getText());
+                    newPed_Reg.txtitemped.setText(txtitemloc.getText());
+                    newPed_Reg.txtdescped.setText(txtdescloc.getText());
+                    newPed_Reg.txtprecioped.setText(txtprecioloc.getText());
                     } 
                   catch( SQLException e ) { 
                       e.printStackTrace(); 
@@ -122,7 +122,7 @@ public class TABLAPRO extends javax.swing.JFrame {
                       } 
                   } 
      }
-                        RegistrosPed.agregar.doClick();
+                        newPed_Reg.agregar.doClick();
         
      
      } 
@@ -135,11 +135,11 @@ public class TABLAPRO extends javax.swing.JFrame {
         public void refresh()
     {
         try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-                  
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 if(con!=null)
                     System.out.println("Se ha estableciso una conexion con la base de datos"+"\n"+url);

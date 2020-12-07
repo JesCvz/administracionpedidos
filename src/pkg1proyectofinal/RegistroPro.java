@@ -201,11 +201,11 @@ public class RegistroPro extends javax.swing.JFrame {
         }
         else{
             try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-                  
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance(); 
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 if(con!=null)
                     System.out.println("Se ha establecido una conexión con la base de datos"+
@@ -265,12 +265,11 @@ public class RegistroPro extends javax.swing.JFrame {
         var2 = txtitempro.getText();
         String sql2 = "Select item,desc_pro,precio_pro FROM productos where item = '"+var2+"'";
         try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-                  
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
-            
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
             con=DriverManager.getConnection(url,usuario,contraseña);
             if(con != null)
                 System.out.println("Se ha establicido una conexión a la base de datos"+"\n"+url);
@@ -341,11 +340,11 @@ public class RegistroPro extends javax.swing.JFrame {
         }
         else{
             try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-                  
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 if(con != null)
                     System.out.println("Se ha establedido una conexión a la base de datos"+"\n"+url);

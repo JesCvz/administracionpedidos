@@ -1,6 +1,3 @@
-/*
-Para resetear el conteo de pedidos ALTER TABLE pedidos AUTO_INCREMENT = 1;
- */
 package pkg1proyectofinal;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -10,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -23,21 +19,20 @@ import java.util.Date;
 import javax.swing.table.TableRowSorter;
 import javax.swing.RowFilter;
 
-
-public class RegistrosPed extends javax.swing.JFrame {
+public class newPed_Reg extends javax.swing.JFrame {
     Connection con = null;
     Statement stmt =null;
     TABLACLI TC = new TABLACLI();
     TABLAPRO TP = new TABLAPRO();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String titulos[] = {"ITEM","Descripcion","PRECIO","Cantidad","Descuento","Subtotal"};
-    String fila[] = new String[7];
+    String fila[] = new String[6];
     DefaultTableModel modelo;
     TableRowSorter trs;
-    //
-    public RegistrosPed() {
-        
-          initComponents();
+    
+    
+    public newPed_Reg() {
+   initComponents();
           int contar = tabla_cot.getRowCount();
           int suma=0;
         this.setTitle("Cotizar Pedido");
@@ -56,35 +51,14 @@ public class RegistrosPed extends javax.swing.JFrame {
                     System.out.println("Se ha estableciso una conexion con la base de datos"+"\n"+url);
                 stmt = con.createStatement();
                ResultSet rs = stmt.executeQuery("SELECT id_ped FROM pedidos WHERE id_ped = (SELECT MAX(id_ped) FROM pedidos)");
-                        if(rs.next()==false)
-                        {
-                            txtid_num.setText("1");
-                        }
-                        else
-                        {
-                             while(rs.next())
-                            {
-                                String id = rs.getString("id_ped"); 
-                                int num = Integer.parseInt(id);
-                                num += 1;
-                                id = Integer.toString(num);
-                                txtid_num.setText(id);
-                           
-                            }
-                        }
               
           }
          catch(ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e) {
              JOptionPane.showMessageDialog(null,"Error al extraer los datos de la tabla");
-         }
+         }  
         
-                
-         
-           
-            
     }
-        
-        public void refresh1()
+ public void refresh1()
         {
              try{
                      Login LG = new Login();
@@ -100,11 +74,7 @@ public class RegistrosPed extends javax.swing.JFrame {
                         while(rs.next())
                         {
                             String id = rs.getString("id_ped"); 
-                            int num = Integer.parseInt(id);
-                            num += 1;
-                            id = Integer.toString(num);
                             txtid_num.setText(id);
-                           
                         }
           }
          catch(ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e) {
@@ -112,8 +82,7 @@ public class RegistrosPed extends javax.swing.JFrame {
          }
              txtfechaped.setDate(null);
         }
-        
-        public void refresh2()
+  public void refresh2()
         {
             float suma=0;
              try{
@@ -124,9 +93,9 @@ public class RegistrosPed extends javax.swing.JFrame {
                     Class.forName(LG.driver).newInstance();
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 if(con!=null)
-                    System.out.println("Se ha estableciso una conexion con la base de datos"+"\n"+url);
+                    System.out.println("Se ha estableciso una conexion con la base de datos para refresh2"+"\n"+url);
                 stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("Select* from vista_productos_pedidos where id_ = '"+txtid_num.getText()+"'");
+                ResultSet rs = stmt.executeQuery("Select * from vista_productos_pedidos where id_ped = '"+txtid_num.getText()+"'");
                 
                 modelo = new DefaultTableModel(null,titulos);
                 while(rs.next()){
@@ -150,7 +119,7 @@ public class RegistrosPed extends javax.swing.JFrame {
              
               for(int i=0;i<tabla_cot.getRowCount();i++)
              {
-                 suma = suma + Float.parseFloat(tabla_cot.getValueAt(i, 6).toString());
+                 suma = suma + Float.parseFloat(tabla_cot.getValueAt(i, 5).toString());
              }
              
              txtsumaef.setText(Float.toString(suma));
@@ -162,8 +131,8 @@ public class RegistrosPed extends javax.swing.JFrame {
          }
             
         }
-        
-        public void consulta() throws ParseException
+  
+   public void consulta() throws ParseException
         {
             
             consultarmem();
@@ -171,8 +140,8 @@ public class RegistrosPed extends javax.swing.JFrame {
             consultar();
             refresh2();
         }
-        
-        public void consultar ()
+   
+   public void consultar () //Consultar el estado del pedido
         {
             String cap="";
         ResultSet rs = null;
@@ -235,23 +204,20 @@ public class RegistrosPed extends javax.swing.JFrame {
        
          
     }
-     
-        
-               
   public void consultarfecha() throws ParseException
    {
         String sDate1= fechatemp.getText();  
         Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);  
-        this.txtfechaped.setDate(date1);
+        txtfechaped.setDate(date1);
         System.out.println(sDate1+"\t"+date1);  
        
    }
-    //Consulta la membresia que fue ingresada en la tabla emergente
-     public void consultarmem(){
+    
+    public void consultarmem(){ //Consulta de la memmbresia
         String cap="";
         ResultSet rs = null;
         String var2 = txtmemloc.getText();
-        String sql2 = "Select idclientes, idclientes FROM clientes where idclientes = '"+var2+"'";
+        String sql2 = "Select * FROM clientes where idclientes = '"+var2+"'";
          System.out.println(var2);
         try{
                      Login LG = new Login();
@@ -317,41 +283,26 @@ public class RegistrosPed extends javax.swing.JFrame {
        
          
     }
-     public void actualizar()
-      {
-        String cadena1, cadena2, cadena3,cadena4,cadena5,cadena6;
-         
-        cadena1 = txtmemloc.getText();
-        cadena2 = txtnomloc.getText();
-        cadena3 = sdf.format(txtfechaped.getDate());
-        cadena4 = txtemploc.getText();
-        cadena5 = txtstatusped.getSelectedItem().toString();
-        cadena6 = txtsumaef.getText();
-      
      
-     try { 
+    
+    public void confirmardatos(){
+        try { 
                      Login LG = new Login();
                     String url = LG.url;
                     String usuario = LG.usuario;
                     String contraseña = LG.contraseña; 
-                    Class.forName(LG.driver).newInstance();
+                    Class.forName(LG.driver).newInstance(); 
                   con = DriverManager.getConnection(url,usuario,contraseña); 
                   if ( con != null ) 
                     System.out.println("Se ha establecido una conexión a la base de datos " +  
                                        "\n " + url ); 
   
                   stmt = con.createStatement();
-                  ResultSet rs = stmt.executeQuery("select* from pedidos where id_num = '"+txtid_num.getText()+"'");
-                  if(rs.next()==false)
-                  {
-                      System.out.println("f");
-                  }
-                  else
-                  {
-                  stmt.executeUpdate("update ignore pedidos set clientes_idclientes = '"+cadena1+"', fecha_ped = '"+cadena3+"', status_ped = '"+cadena5+"', precio_ped = '"+cadena6+"' where id_ped = '"+txtid_num.getText()+"' "); 
+                  ResultSet rs = stmt.executeQuery("select* from pedidos where id_ped = '"+txtid_num.getText()+"'");
+              
+                  stmt.executeUpdate("update pedidos set fecha_ped = '"+sdf.format(txtfechaped.getDate())+"',status_ped = '"+txtstatusped.getSelectedItem().toString()+"', empleados_num_emp = '"+txtemploc.getText()+"', clientes_idclientes = '"+txtmemloc.getText()+"' where id_ped = '"+txtid_num.getText()+"'"); 
                   System.out.println("Los valores han sido Actualizados"); 
-                  }
-                 
+                  javax.swing.JOptionPane.showMessageDialog(this,"Actualizado correctamente!","AVISO!",javax.swing.JOptionPane.INFORMATION_MESSAGE);
                   } 
                   catch( SQLException e ) { 
                       e.printStackTrace(); 
@@ -369,112 +320,9 @@ public class RegistrosPed extends javax.swing.JFrame {
                       } 
                   } 
      }
-     
-      
-        Pedidos.refresh.doClick();
-      }
-     
-     public void registrar()
-     {
-         String cadena2, cadena3, cadena4,cadena5,cadena6,cadena7;
-         if(txtfechaped.getDate() == null)
-         {
-             javax.swing.JOptionPane.showMessageDialog(this,"Debe llenar todos los campos \n","AVISO!",javax.swing.JOptionPane.INFORMATION_MESSAGE);
-         }
-         else
-         {
-             cadena2 = txtmemloc.getText();
-        cadena3 = txtnomloc.getText();
-        cadena4 = sdf.format(txtfechaped.getDate());
-        cadena5 = txtemploc.getText();
-        cadena6 = txtstatusped.getSelectedItem().toString();
-        cadena7 = txtsumaef.getText();
-        
-        
-        if((txtmemloc.getText().equals(""))||(txtnomloc.getText().equals(""))||txtfechaped.getDateFormatString().equals(""))
-        
-        {
-            System.out.println(txtfechaped.getDate());
-            javax.swing.JOptionPane.showMessageDialog(this,"Debe llenar todos los campos \n","AVISO!",javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        }
-         
-        else{
-            try{
-                     Login LG = new Login();
-                    String url = LG.url;
-                    String usuario = LG.usuario;
-                    String contraseña = LG.contraseña; 
-                    Class.forName(LG.driver).newInstance();
-                con = DriverManager.getConnection(url,usuario,contraseña);
-                if(con!=null)
-                    System.out.println("Se ha establecido una conexión con la base de datos"+
-                    "\n"+url);
-                
-                      
-                        stmt = con.createStatement();
-                        ResultSet rs = stmt.executeQuery("select* from pedidos");
-                        if(rs.next()==false)
-                        {
-                            stmt.executeUpdate("INSERT INTO pedidos(`id_ped`, `fecha_ped`, `status_ped`, `empleados_num_emp`, `status_ped`, `precio_ped`) VALUES('"+txtid_num.getText()+"','"+cadena4+"','"+cadena6+"','"+cadena6+"','"+cadena5+"','"+cadena6+"','"+cadena7+"')");
-                            System.out.println("Los valores han sido agregados a la base de datos");
-                            javax.swing.JOptionPane.showMessageDialog(this,"Registro exitoso! \n","AVISO!",javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                        }
-                          else
-                         {
-                             rs = stmt.executeQuery("select* from pedidos");
-                                if (rs.next()==true)
-                                {
-                                            rs = stmt.executeQuery("select* from pedidos where id_num = '"+txtid_num.getText()+"'");
-                                             if(rs.next()==true)
-                                             {
-                                                 System.out.println("pase por aqui jejtl");
-                                                   actualizar();
-                                             }
-
-                                else
-                                {
-                                    stmt.executeUpdate("INSERT INTO pedidos(`id_num`, `mem_cli`, `nom_cli`, `fecha_ped`, `nom_emp`, `status_ped`, `precio_ped`) VALUES('"+txtid_num.getText()+"','"+cadena2+"','"+cadena3+"','"+cadena4+"','"+cadena5+"','"+cadena6+"','"+cadena7+"')");
-                                    System.out.println("Los valores han sido agregados a la base de datos");
-                                    javax.swing.JOptionPane.showMessageDialog(this,"Registro exitoso! \n","AVISO!",javax.swing.JOptionPane.INFORMATION_MESSAGE);
-
-                                    Timer timer = new Timer();
-                                    TimerTask tarea = new TimerTask() {
-                                            @Override
-                                            public void run() {
-                                            refresh1();
-                                            refresh2();
-                                        }
-                                            };
-
-                                      timer.schedule(tarea, 100);
-                                }
-                            }
-                  }
-                        
-                
-            }catch(InstantiationException|IllegalAccessException|ClassNotFoundException|SQLException ex){
-            Logger.getLogger(RegistrosPed.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            finally{
-                if(con != null){
-                    try{
-                        con.close();
-                        stmt.close();
-                    }catch (SQLException e){
-                        System.out.println(e.getMessage());
-                    }
-                }
-            }
-        }
-        Pedidos.refresh.doClick();
-        
-     }
-         }
-        
-     
-      
-     
-     //agregar el producto a la tabla de cot
+     Pedidos.refresh.doClick();
+     } 
+    
     public void agregar()
     {
          String cadena2, cadena3, cadena4;
@@ -501,13 +349,13 @@ public class RegistrosPed extends javax.swing.JFrame {
                     Class.forName(LG.driver).newInstance();
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 if(con!=null)
-                    System.out.println("Se ha establecido una conexión con la base de datos"+
+                    System.out.println("Estoy hasta la madre "+
                     "\n"+url);
                 
                       
                         stmt = con.createStatement();
                                                 //id_num,item, desc_pro, precio_pro, id, cantidad, descuentoS
-                        stmt.executeUpdate("INSERT INTO cot_ped(`id_num`, `item`, `desc_pro`, `precio_pro`,`cantidad`, `descuento`) VALUES('"+txtid_num.getText()+"','"+cadena2+"','"+cadena3+"','"+cadena4+"','"+1+"','"+0+"')");
+                        stmt.executeUpdate("INSERT INTO pedidos_has_productos(`pedidos_id_ped`, `productos_item`,`cantidad_pro`, `descuento_pro`) VALUES('"+txtid_num.getText()+"','"+txtitemped.getText()+"','"+1+"','"+0+"')");
                         System.out.println("Los valores han sido agregados a la base de datos");
                         
                 
@@ -533,16 +381,59 @@ public class RegistrosPed extends javax.swing.JFrame {
                 @Override
                 public void run() {
                         refresh2();
-                        actualizar();
                     }
             };
 
       timer.schedule(tarea, 100);
     }
          }
-        
     
-   public void eliminar()
+    
+    
+    public void registrar()
+     {
+         String cadena7;
+
+        cadena7 = txtsumaef.getText();
+        
+            try{
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
+                    con = DriverManager.getConnection(url,usuario,contraseña);
+                    if(con!=null)
+                    System.out.println("Se ha establecido una conexión con la base de datos"+
+                    "\n"+url);
+                
+                        stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery("select* from pedidos");
+                        stmt.executeUpdate("UPDATE pedidos SET `precio_ped` =('"+cadena7+"') WHERE id_ped= ('"+txtid_num.getText()+"')");
+                        System.out.println("Los valores han sido agregados a la base de datos");
+                        javax.swing.JOptionPane.showMessageDialog(this,"Registro exitoso! \n","AVISO!",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        
+                         
+            }catch(InstantiationException|IllegalAccessException|ClassNotFoundException|SQLException ex){
+            Logger.getLogger(RegistrosPed.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            finally{
+                if(con != null){
+                    try{
+                        con.close();
+                        stmt.close();
+                    }catch (SQLException e){
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+        
+        Pedidos.refresh.doClick();
+        
+     
+         }
+    
+    public void eliminar()
    {
        int fila = tabla_cot.getSelectedRow()+1;
     System.out.println(fila);        
@@ -567,7 +458,7 @@ public class RegistrosPed extends javax.swing.JFrame {
                                        "\n " + url ); 
   
                   stmt = con.createStatement(); 
-                  stmt.executeUpdate("DELETE FROM cot_ped WHERE id = '"+valor+"'"); 
+                  stmt.executeUpdate("DELETE FROM pedidos_has_productos WHERE pedidos_id_ped = '"+txtid_num.getText()+"' AND productos_item = '"+valor+"'"); 
 
                   System.out.println("El registro fue eliminado"); 
                   
@@ -591,11 +482,10 @@ public class RegistrosPed extends javax.swing.JFrame {
      } 
     
     refresh2();
-    actualizar();
-    
    }
+     
     
-    public void actualizaritems()
+     public void actualizaritems()
     {
           int fila = tabla_cot.getSelectedRow()+1;
     System.out.println(fila);        
@@ -620,10 +510,8 @@ public class RegistrosPed extends javax.swing.JFrame {
                                        "\n " + url ); 
   
                   stmt = con.createStatement(); 
-                  stmt.executeUpdate("update ignore cot_ped set precio_pro = '"+tabla_cot.getValueAt((fila-1), 3)+"'  ,descuento = '"+tabla_cot.getValueAt((fila-1), 4)+"' , cantidad= '"+tabla_cot.getValueAt((fila-1), 5)+"'  WHERE id = '"+valor+"'"); 
-                  stmt.executeUpdate("update ignore productos set precio_pro = '"+tabla_cot.getValueAt((fila-1), 3)+"' WHERE item = '"+tabla_cot.getValueAt((fila-1), 1)+"'"); 
-                  System.out.println("El item fue actualizado con exito"); 
-                  
+                  stmt.executeUpdate("UPDATE pedidos_has_productos SET descuento_pro = '"+tabla_cot.getValueAt((fila-1), 4)+"' , cantidad_pro= '"+tabla_cot.getValueAt((fila-1), 3)+"'  WHERE pedidos_id_ped = '"+txtid_num.getText()+"' AND productos_item= '"+valor+"'"); 
+                  System.out.println("El item fue actualizado con exito");                 
                   } 
                   catch( SQLException e ) { 
                       e.printStackTrace(); 
@@ -643,10 +531,10 @@ public class RegistrosPed extends javax.swing.JFrame {
      }
      } 
     refresh2();
-    actualizar();
     }
+
     
-    public void limpiar()
+     public void limpiar()
     {
         this.txtmemloc.setText("");
         this.txtnomloc.setText("");
@@ -654,6 +542,11 @@ public class RegistrosPed extends javax.swing.JFrame {
         this.txtstatusped.setSelectedItem("Pendiente");
 
     }
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -673,6 +566,7 @@ public class RegistrosPed extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla_cot = new javax.swing.JTable();
@@ -759,6 +653,14 @@ public class RegistrosPed extends javax.swing.JFrame {
         });
         getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 270, 120, 30));
 
+        jButton5.setText("Confirmar Datos");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 200, 120, 30));
+
         jButton2.setText("Agregar Articulos");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -828,6 +730,11 @@ public class RegistrosPed extends javax.swing.JFrame {
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 130, -1, 20));
 
         txtemploc.setEditable(false);
+        txtemploc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtemplocActionPerformed(evt);
+            }
+        });
         getContentPane().add(txtemploc, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 150, 200, -1));
 
         txtid_num.setEditable(false);
@@ -878,84 +785,34 @@ public class RegistrosPed extends javax.swing.JFrame {
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 580));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        dispose(); 
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void txtfiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfiltroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtfiltroActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-          if(TC.isVisible()==true)
-        {
-        TC.dispose();
-        TC.refresh();
-        TC.setVisible(true);
-        }
-        else
-        {
-        TC.refresh();
-        TC.setVisible(true);
-        }   
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(TP.isVisible()==true)
-        {
-        TP.dispose();
-        TP.refresh();
-        TP.setVisible(true);
-        
-        }
-        else
-        {
-        TP.refresh();
-        TP.setVisible(true);
-        }        
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
-        refresh1();
-        refresh2();
-    }//GEN-LAST:event_refreshActionPerformed
-
-    private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-        agregar();        // TODO add your handling code here:
-    }//GEN-LAST:event_agregarActionPerformed
 
     private void txtmemlocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmemlocActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtmemlocActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        eliminar();        // TODO add your handling code here:
+    eliminar();       // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    registrar();     
-    limpiar();
-    refresh1();
-    refresh2();
-    dispose();
-// TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if(TP.isVisible()==true)
+        {
+            TP.dispose();
+            TP.refresh();
+            TP.setVisible(true);
 
-    private void txtfiltroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtfiltroKeyTyped
-    txtfiltro.addKeyListener(new KeyAdapter() {
-        @Override
-        public void keyReleased(KeyEvent e) {
-           trs.setRowFilter(RowFilter.regexFilter("(?i)" + txtfiltro.getText(), 0, 1,2));
-        }      
-    });     
-    trs = new TableRowSorter(modelo);
-    tabla_cot.setRowSorter(trs);
-    }//GEN-LAST:event_txtfiltroKeyTyped
+        }
+        else
+        {
+            TP.refresh();
+            TP.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tabla_cotKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabla_cotKeyPressed
-int car = evt.getKeyCode();
+    int car = evt.getKeyCode();
         if(car==KeyEvent.VK_ENTER)
         {
             actualizaritems();
@@ -964,8 +821,61 @@ int car = evt.getKeyCode();
         if(car==127)
         {
             eliminar();
-        }       
+        }  
     }//GEN-LAST:event_tabla_cotKeyPressed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtfiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtfiltroActionPerformed
+
+    private void txtfiltroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtfiltroKeyTyped
+
+    }//GEN-LAST:event_txtfiltroKeyTyped
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if(TC.isVisible()==true)
+        {
+            TC.dispose();
+            TC.refresh();
+            TC.setVisible(true);
+        }
+        else
+        {
+            TC.refresh();
+            TC.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
+
+    }//GEN-LAST:event_refreshActionPerformed
+
+    private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
+    agregar();        // TODO add your handling code here:
+    }//GEN-LAST:event_agregarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    confirmardatos();
+    registrar();     
+    limpiar();
+    refresh1();
+    refresh2();
+    dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtemplocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemplocActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtemplocActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+//      
+ //   refresh1();
+ //   refresh2();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -984,20 +894,20 @@ int car = evt.getKeyCode();
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegistrosPed.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(newPed_Reg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegistrosPed.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(newPed_Reg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegistrosPed.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(newPed_Reg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegistrosPed.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(newPed_Reg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RegistrosPed().setVisible(true);
+                new newPed_Reg().setVisible(true);
             }
         });
     }
@@ -1009,6 +919,7 @@ int car = evt.getKeyCode();
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

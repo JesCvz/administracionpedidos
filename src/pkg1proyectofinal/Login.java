@@ -16,6 +16,10 @@ import java.util.logging.Logger;
     public class Login extends javax.swing.JFrame {
     Connection con =null;
     Statement stmt =null;
+    String url = "jdbc:mysql://localhost:3306/mydb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    String usuario = "root";
+    String contraseña = "JM5038766866"; 
+    String driver = "com.mysql.cj.jdbc.Driver";
     public Login() {
         initComponents();
         this.setTitle("Inicio de sesion");
@@ -50,11 +54,11 @@ import java.util.logging.Logger;
      else {   
      
      try { 
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-                  
-                  Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                   con = DriverManager.getConnection(url,usuario,contraseña); 
                   if ( con != null ) 
                     System.out.println("Se ha establecido una conexión a la base de datos " +  
@@ -71,7 +75,7 @@ import java.util.logging.Logger;
                
              javax.swing.JOptionPane.showMessageDialog(this,"Bienvenido \n","AVISO!",javax.swing.JOptionPane.INFORMATION_MESSAGE);
              Menu M1 = new Menu();
-             cadena3=rs.getString("nom_emp");
+             cadena3=rs.getString("num_emp");
              M1.setVisible(true);
              Menu.txtusuariom.setText(cadena3);
              
@@ -82,8 +86,7 @@ import java.util.logging.Logger;
                  
                   catch( SQLException e ) { 
                       e.printStackTrace(); 
-                  } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(RegistrosEmp.class.getName()).log(Level.SEVERE, null, ex);
+                  } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {;
         } 
   
               finally { 
@@ -100,9 +103,6 @@ import java.util.logging.Logger;
               javax.swing.JOptionPane.showMessageDialog(this,"El usuario/contraseña no fue encontrado\n","ERROR!", javax.swing.JOptionPane.ERROR_MESSAGE);
              
           }
-    
-   
-    
      } 
     }
    
@@ -167,6 +167,7 @@ import java.util.logging.Logger;
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void PasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordActionPerformed

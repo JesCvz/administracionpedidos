@@ -74,6 +74,11 @@ public class RegistrosCli extends javax.swing.JFrame {
         getContentPane().add(txttelefonocli, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 112, -1));
 
         txtmembresiacli.setEditable(false);
+        txtmembresiacli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtmembresiacliActionPerformed(evt);
+            }
+        });
         txtmembresiacli.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtmembresiacliKeyTyped(evt);
@@ -253,6 +258,10 @@ public class RegistrosCli extends javax.swing.JFrame {
         limpiar();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void txtmembresiacliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmembresiacliActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtmembresiacliActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -269,10 +278,11 @@ public class RegistrosCli extends javax.swing.JFrame {
         }
         else{
             try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
              con = DriverManager.getConnection(url,usuario,contraseña); 
              if ( con != null ) 
                     System.out.println("Se ha establecido una conexión a la base de datos " +  
@@ -292,7 +302,7 @@ public class RegistrosCli extends javax.swing.JFrame {
                     rs = stmt.executeQuery("select* from clientes");
                     if (rs.next()==true)
                     {
-                        rs = stmt.executeQuery("select* from clientes where mem_cli = '"+cadena2+"'");
+                        rs = stmt.executeQuery("select* from clientes where idclientes = '"+cadena2+"'");
                         if(rs.next()==true)
                         {
                             javax.swing.JOptionPane.showMessageDialog(this,"Ya se registro este numero! \n","AVISO!",javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -333,13 +343,14 @@ public class RegistrosCli extends javax.swing.JFrame {
         String cap="";
         ResultSet rs = null;
         var2 = txtmembresiacli.getText();
-        String sql2 = "Select mem_cli, nom_cli,dir_cli,tel_cli  FROM clientes where mem_cli = '"+var2+"'";
+        String sql2 = "Select idclientes, nom_cli,dir_cli,tel_cli  FROM clientes where idclientes = '"+var2+"'";
         
         try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
         
         con = DriverManager.getConnection(url,usuario,contraseña);
         if(con != null)
@@ -355,7 +366,7 @@ public class RegistrosCli extends javax.swing.JFrame {
         }
         rs = stmt.executeQuery(sql2);
             while(rs.next()){
-                String id = rs.getString("mem_cli");
+                String id = rs.getString("idclientes");
                 String ino = rs.getString("nom_cli");
                 String idir = rs.getString("dir_cli");
                 String itel = rs.getString("tel_cli");
@@ -419,16 +430,17 @@ public class RegistrosCli extends javax.swing.JFrame {
     }
         else{
             try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866"; 
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance(); 
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 if(con != null)
                     System.out.println("Se ha establedido una conexión a la base de datos"+"\n"+url);
                 
                 stmt = con.createStatement();
-                stmt.executeUpdate("update ignore clientes set mem_cli = '"+cadena1+"',nom_cli='"+cadena2+"',dir_cli='"+cadena3+"', tel_cli='"+cadena4+"'where mem_cli='"+txtmembresiacli.getText()+"'");
+                stmt.executeUpdate("update ignore clientes set idclientes = '"+cadena1+"',nom_cli='"+cadena2+"',dir_cli='"+cadena3+"', tel_cli='"+cadena4+"'where idclientes='"+txtmembresiacli.getText()+"'");
                 
                 System.out.println("Los valores han sido actualizados");
             }

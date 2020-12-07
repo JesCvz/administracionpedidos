@@ -32,20 +32,20 @@ public class Clientes extends javax.swing.JFrame {
         this.setLocation(200, 100);
         this.setResizable(false);
          try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866";  
-            
-               Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 if(con!=null)
                     System.out.println("Se ha estableciso una conexion con la base de datos"+"\n"+url);
                 stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("Select* from clientes");
+                ResultSet rs = stmt.executeQuery("select* from clientes where idclientes != '"+"999999"+"'");
                 
                 modelo = new DefaultTableModel(null,titulos);
                 while(rs.next()){
-                    fila[0]=rs.getString("mem_cli");
+                    fila[0]=rs.getString("idclientes");
                     fila[1]=rs.getString("nom_cli");
                     fila[2]=rs.getString("dir_cli");
                     fila[3]=rs.getString("tel_cli");
@@ -178,17 +178,17 @@ public void borrar(){
         else if(fila>=1){
             String valor = tabla_cli.getValueAt((fila-1), 0).toString();
             try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866";  
-            
-               Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                        Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 
                 if(con != null)
                     System.out.println("Se ha establecido una conexion a la base de datos"+"\n"+url);
                 stmt = con.createStatement();
-                stmt.executeUpdate("DELETE FROM clientes WHERE mem_cli = '"+valor+"'");
+                stmt.executeUpdate("DELETE FROM clientes WHERE idclientes = '"+valor+"'");
                 
                 System.out.println("El registro fue eliminado");
                 
@@ -217,20 +217,20 @@ public void borrar(){
 public void refresh()
 {
     try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866";  
-            
-               Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 if(con!=null)
                     System.out.println("Se ha estableciso una conexion con la base de datos"+"\n"+url);
                 stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("Select* from clientes");
+                ResultSet rs = stmt.executeQuery("select* from clientes where idclientes != '"+"999999"+"'");
                 
                 modelo = new DefaultTableModel(null,titulos);
                 while(rs.next()){
-                    fila[0]=rs.getString("mem_cli");
+                    fila[0]=rs.getString("idclientes");
                     fila[1]=rs.getString("nom_cli");
                     fila[2]=rs.getString("dir_cli");
                     fila[3]=rs.getString("tel_cli");
@@ -266,22 +266,22 @@ public void consultar()
      
      try { 
          String valor = tabla_cli.getValueAt((fila-1), 0).toString();
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866";  
-            
-               Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                   con = DriverManager.getConnection(url,usuario,contraseña); 
                   if ( con != null ) 
                     System.out.println("Se ha establecido una conexión a la base de datos " +  
                                        "\n " + url ); 
   
                   stmt = con.createStatement(); 
-                  ResultSet rs = stmt.executeQuery("select* from clientes where mem_cli = '"+valor+"'");
+                  ResultSet rs = stmt.executeQuery("select* from clientes where idclientes = '"+valor+"'");
                   
                   while(rs.next())
                   {
-                      txtnumcli.setText(rs.getString("mem_cli"));
+                      txtnumcli.setText(rs.getString("idclientes"));
                   }
                   
                   RegistrosCli.txtmembresiacli.setText(txtnumcli.getText());

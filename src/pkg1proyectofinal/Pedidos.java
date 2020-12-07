@@ -21,7 +21,7 @@ public class Pedidos extends javax.swing.JFrame {
     String titulos[] = {"ID Ped","Nombre Cliente","Ejecutivo","Fecha Entrega", "Estado", "Total"};
     String fila[] = new String[6];
     DefaultTableModel modelo;
-    RegistrosPed RP = new RegistrosPed();  
+    newPed_Reg RP = new newPed_Reg();  
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
    
     public Pedidos() {
@@ -30,23 +30,23 @@ public class Pedidos extends javax.swing.JFrame {
         this.setLocation(200,100);
         this.setResizable(false);
         try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866";  
-            
-               Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 if(con!=null)
                     System.out.println("Se ha estableciso una conexion con la base de datos"+"\n"+url);
                 stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("Select* from pedidos");
+                ResultSet rs = stmt.executeQuery("Select* from vista_pedidos");
                 
                 modelo = new DefaultTableModel(null,titulos);
                 while(rs.next()){
-                    fila[0]=rs.getString("id_num");
+                    fila[0]=rs.getString("id_ped");
                     fila[1]=rs.getString("nom_cli");
                     fila[2]=rs.getString("nom_emp");
-                    fila[3]=rs.getString("fecha_ped");
+                    fila[3]=rs.getString("DATE_FORMAT(fecha_ped,'%d/%m/%Y')");
                     fila[4]=rs.getString("status_ped");
                     fila[5]=rs.getString("precio_ped");
                     
@@ -71,23 +71,23 @@ public class Pedidos extends javax.swing.JFrame {
     public void refresh()
    {
          try{
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866";  
-            
-               Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                 con = DriverManager.getConnection(url,usuario,contraseña);
                 if(con!=null)
                     System.out.println("Se ha estableciso una conexion con la base de datos"+"\n"+url);
                 stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("Select* from pedidos");
+                ResultSet rs = stmt.executeQuery("Select* from vista_pedidos");
                 
                 modelo = new DefaultTableModel(null,titulos);
                 while(rs.next()){
-                    fila[0]=rs.getString("id_num");
+                    fila[0]=rs.getString("id_ped");
                     fila[1]=rs.getString("nom_cli");
                     fila[2]=rs.getString("nom_emp");
-                    fila[3]=rs.getString("fecha_ped");
+                    fila[3]=rs.getString("DATE_FORMAT(fecha_ped,'%d/%m/%Y')");
                     fila[4]=rs.getString("status_ped");
                     fila[5]=rs.getString("precio_ped");
                     
@@ -120,36 +120,34 @@ public class Pedidos extends javax.swing.JFrame {
      
      try { 
          String valor = tabla_ped.getValueAt((fila-1), 0).toString();
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866";  
-            
-               Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                   con = DriverManager.getConnection(url,usuario,contraseña); 
                   if ( con != null ) 
                     System.out.println("Se ha establecido una conexión a la base de datos " +  
                                        "\n " + url ); 
   
                   stmt = con.createStatement(); 
-                  ResultSet rs = stmt.executeQuery("select* from pedidos where id_num = '"+valor+"'");
+                  ResultSet rs = stmt.executeQuery("select id_ped, clientes_idclientes, DATE_FORMAT(fecha_ped,'%d/%m/%Y'), empleados_num_emp from pedidos where id_ped = '"+valor+"'");
                   
                   while(rs.next())
                   {
-                      txtidpedloc.setText(rs.getString("id_num"));
-                      txtmemloc.setText(rs.getString("mem_cli"));
-                      txtemploc.setText(rs.getString("nom_emp"));
+                      txtidpedloc.setText(rs.getString("id_ped"));
+                      txtmemloc.setText(rs.getString("clientes_idclientes"));
+                      txtfechaloc.setText(rs.getString("DATE_FORMAT(fecha_ped,'%d/%m/%Y')"));
+                      txtemploc.setText(rs.getString("empleados_num_emp"));
                   }
                   stmt = con.createStatement(); 
-                  rs = stmt.executeQuery( "SELECT DATE_FORMAT(fecha_ped, '%d/%m/%Y') FROM pedidos where id_num = '"+valor+"'");
-                  while(rs.next())
-                  {
-                      txtfechaloc.setText(rs.getString("DATE_FORMAT(fecha_ped, '%d/%m/%Y')"));
-                  }
+                  rs = stmt.executeQuery( "SELECT nom_emp FROM vista_pedidos WHERE id_ped = '"+valor+"'");
+          
                   
-                  RegistrosPed.txtid_num.setText(txtidpedloc.getText());
-                  RegistrosPed.txtmemloc.setText(txtmemloc.getText());
-                  RegistrosPed.txtemploc.setText(txtemploc.getText());
-                  RegistrosPed.fechatemp.setText(txtfechaloc.getText());
+                  newPed_Reg.txtid_num.setText(txtidpedloc.getText());
+                  newPed_Reg.txtmemloc.setText(txtmemloc.getText());
+                  newPed_Reg.txtemploc.setText(txtemploc.getText());
+                  newPed_Reg.fechatemp.setText(txtfechaloc.getText());
 
                   if(RP.isVisible()==true)
                     {
@@ -201,19 +199,18 @@ public class Pedidos extends javax.swing.JFrame {
      
      try { 
          String valor = tabla_ped.getValueAt((fila-1), 0).toString();
-            String url = "jdbc:mysql://localhost:3306/proyecto?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String usuario = "root";
-            String contraseña = "JM5038766866";  
-            
-               Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
                   con = DriverManager.getConnection(url,usuario,contraseña); 
                   if ( con != null ) 
                     System.out.println("Se ha establecido una conexión a la base de datos " +  
                                        "\n " + url ); 
   
                   stmt = con.createStatement(); 
-                  stmt.executeUpdate("DELETE FROM pedidos WHERE id_num= '"+valor+"'"); 
-                  stmt.executeUpdate("DELETE FROM cot_ped WHERE id_num= '"+valor+"'"); 
+                  stmt.executeUpdate("DELETE FROM pedidos WHERE id_ped= '"+valor+"'"); 
                   System.out.println("El registro fue eliminado"); 
                   
                   } 
@@ -238,6 +235,44 @@ public class Pedidos extends javax.swing.JFrame {
     } 
    }
     }
+    
+    
+    
+           public void registrarNuevoPedido()
+     {
+            try{
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
+                con = DriverManager.getConnection(url,usuario,contraseña);
+                if(con!=null)
+                    System.out.println("Se ha establecido una conexión con la base de datos"+
+                    "\n"+url);
+                
+                      
+                        stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery("select* from pedidos");
+                            stmt.executeUpdate("INSERT INTO pedidos(`precio_ped`,`fecha_ped`,`empleados_num_emp`,`clientes_idclientes`, `status_ped`) VALUES ('"+"NULL"+"', '"+"2020-12-31"+"', '"+txtemploc.getText()+"', '"+"999999"+"','"+"Pendiente"+"')");
+                            System.out.println("Los valores han sido agregados a la base de datos");              
+                
+            }catch(InstantiationException|IllegalAccessException|ClassNotFoundException|SQLException ex){
+            Logger.getLogger(RegistrosPed.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            finally{
+                if(con != null){
+                    try{
+                        con.close();
+                        stmt.close();
+                    }catch (SQLException e){
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+        
+        
+     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -354,6 +389,7 @@ public class Pedidos extends javax.swing.JFrame {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -375,6 +411,7 @@ public class Pedidos extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
             String cadena3 = txtemploc.getText();
+            registrarNuevoPedido();
        if(RP.isVisible()==true)
         {
             RP.dispose();
@@ -382,7 +419,7 @@ public class Pedidos extends javax.swing.JFrame {
             RP.refresh1();
             RP.refresh2();
             RP.limpiar();
-            RegistrosPed.txtemploc.setText(cadena3);
+            newPed_Reg.txtemploc.setText(cadena3);
         }
         else
         {
@@ -390,7 +427,7 @@ public class Pedidos extends javax.swing.JFrame {
             RP.refresh1();
             RP.refresh2();
             RP.limpiar();
-            RegistrosPed.txtemploc.setText(cadena3);
+            newPed_Reg.txtemploc.setText(cadena3);
         }   
    
     }//GEN-LAST:event_jButton2ActionPerformed
