@@ -41,6 +41,7 @@ public Menu(String cadena1)
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtusuariom = new javax.swing.JTextField();
         bg = new javax.swing.JLabel();
@@ -120,6 +121,14 @@ public Menu(String cadena1)
             }
         });
         getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 670, 180, 50));
+
+        jButton2.setText("Auditorias");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 670, 180, 50));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Bienvenido");
@@ -229,6 +238,21 @@ public Menu(String cadena1)
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    Auditorias Aud = new Auditorias();
+    if(Aud.isVisible()==true)
+        {
+        Aud.dispose();
+        Aud.setVisible(true);
+        }
+        else
+        {
+        Aud.setVisible(true);
+        }      
+    
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -267,6 +291,7 @@ public Menu(String cadena1)
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
