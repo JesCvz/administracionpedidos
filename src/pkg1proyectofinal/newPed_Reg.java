@@ -576,10 +576,6 @@ public class newPed_Reg extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel15 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         txtmemloc = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -590,11 +586,11 @@ public class newPed_Reg extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        gnrreporte = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla_cot = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtnomloc = new javax.swing.JTextField();
@@ -618,22 +614,6 @@ public class newPed_Reg extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel15.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel15.setText("Tel: 81 - 1224 - 0050");
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 100, -1, -1));
-
-        jLabel14.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel14.setText("Carretera Nacional");
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 80, -1, -1));
-
-        jLabel13.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel13.setText("Sucursal: Monterrey III 5304");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 60, -1, -1));
-
-        jLabel12.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel12.setText("Costco de Mexico S.A. de C.V.");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 40, -1, -1));
 
         txtmemloc.setEditable(false);
         txtmemloc.addActionListener(new java.awt.event.ActionListener() {
@@ -670,6 +650,14 @@ public class newPed_Reg extends javax.swing.JFrame {
         jLabel4.setText("Total Efectivo:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 290, 100, 20));
 
+        gnrreporte.setText("Agregar Articulos");
+        gnrreporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gnrreporteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(gnrreporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 10, 120, -1));
+
         jButton6.setText("Eliminar Articulos");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -705,14 +693,6 @@ public class newPed_Reg extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tabla_cot);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 1000, 340));
-
-        jButton3.setText("Regresar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 10, 110, -1));
 
         jButton5.setText("Aplicar Descuentos");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -849,10 +829,6 @@ public class newPed_Reg extends javax.swing.JFrame {
         }  
     }//GEN-LAST:event_tabla_cotKeyPressed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void txtfiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfiltroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtfiltroActionPerformed
@@ -901,6 +877,10 @@ public class newPed_Reg extends javax.swing.JFrame {
     refresh2();// TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void gnrreporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gnrreporteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_gnrreporteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -939,19 +919,15 @@ public class newPed_Reg extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton agregar;
     public static javax.swing.JTextField fechatemp;
+    private javax.swing.JButton gnrreporte;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

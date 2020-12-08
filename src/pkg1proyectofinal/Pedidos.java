@@ -254,7 +254,7 @@ public class Pedidos extends javax.swing.JFrame {
                       
                         stmt = con.createStatement();
                         ResultSet rs = stmt.executeQuery("select* from pedidos");
-                            stmt.executeUpdate("INSERT INTO pedidos(`precio_ped`,`fecha_ped`,`empleados_num_emp`,`clientes_idclientes`, `status_ped`) VALUES ('"+"NULL"+"', '"+"2020-12-31"+"', '"+txtemploc.getText()+"', '"+"-1"+"','"+"Pendiente"+"')");
+                            stmt.executeUpdate("INSERT INTO pedidos(`precio_ped`,`fecha_ped`,`empleados_num_emp`,`clientes_idclientes`, `status_ped`,`costover`) VALUES ('"+"NULL"+"', '"+"2020-12-31"+"', '"+txtemploc.getText()+"', '"+"-1"+"','"+"Pendiente"+"','"+"no"+"')");
                             System.out.println("Los valores han sido agregados a la base de datos");              
                 
             }catch(InstantiationException|IllegalAccessException|ClassNotFoundException|SQLException ex){
@@ -304,6 +304,38 @@ public class Pedidos extends javax.swing.JFrame {
         
         
      }
+            
+            public void generarreporte()
+     {
+            try{
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
+                con = DriverManager.getConnection(url,usuario,contraseña);
+                if(con!=null)
+                    System.out.println("Se ha establecido una conexión con la base de datos"+
+                    "\n"+url);
+                        stmt = con.createStatement();
+                            stmt.executeUpdate("CALL reporte_pedidos");
+                            System.out.println("Reporte generado");              
+                
+            }catch(InstantiationException|IllegalAccessException|ClassNotFoundException|SQLException ex){
+        }
+            finally{
+                if(con != null){
+                    try{
+                        con.close();
+                        stmt.close();
+                    }catch (SQLException e){
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+        
+        
+     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -314,13 +346,14 @@ public class Pedidos extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         txtemploc = new javax.swing.JTextField();
         refreshtotal = new javax.swing.JButton();
-        refresh = new javax.swing.JButton();
+        gnrreporte = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         txtidpedloc = new javax.swing.JTextField();
         txtmemloc = new javax.swing.JTextField();
         txtfechaloc = new javax.swing.JTextField();
         Eliminar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        refresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -397,13 +430,13 @@ public class Pedidos extends javax.swing.JFrame {
         });
         getContentPane().add(refreshtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 160, 120, 40));
 
-        refresh.setText("Refresh");
-        refresh.addActionListener(new java.awt.event.ActionListener() {
+        gnrreporte.setText("Generar Reporte");
+        gnrreporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshActionPerformed(evt);
+                gnrreporteActionPerformed(evt);
             }
         });
-        getContentPane().add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 10, 100, 30));
+        getContentPane().add(gnrreporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 10, 130, 40));
 
         jButton3.setText("Consultar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -427,6 +460,14 @@ public class Pedidos extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/TABLAS.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, -1));
+
+        refresh.setText("Refresh");
+        refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshActionPerformed(evt);
+            }
+        });
+        getContentPane().add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 10, 100, 30));
 
         pack();
         setLocationRelativeTo(null);
@@ -504,6 +545,11 @@ int car = evt.getKeyCode();
     // TODO add your handling code here:
     }//GEN-LAST:event_refreshtotalActionPerformed
 
+    private void gnrreporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gnrreporteActionPerformed
+    generarreporte();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_gnrreporteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -541,6 +587,7 @@ int car = evt.getKeyCode();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Eliminar;
+    public static javax.swing.JButton gnrreporte;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
