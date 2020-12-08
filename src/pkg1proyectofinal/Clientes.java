@@ -41,7 +41,7 @@ public class Clientes extends javax.swing.JFrame {
                 if(con!=null)
                     System.out.println("Se ha estableciso una conexion con la base de datos"+"\n"+url);
                 stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("select* from clientes where idclientes != '"+"999999"+"'");
+                ResultSet rs = stmt.executeQuery("select* from clientes where idclientes != '"+"-2"+"' AND  idclientes != '"+"-1"+"'");
                 
                 modelo = new DefaultTableModel(null,titulos);
                 while(rs.next()){
@@ -226,7 +226,7 @@ public void refresh()
                 if(con!=null)
                     System.out.println("Se ha estableciso una conexion con la base de datos"+"\n"+url);
                 stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("select* from clientes where idclientes != '"+"999999"+"'");
+                ResultSet rs = stmt.executeQuery("select* from clientes where idclientes != '"+"-2"+"' AND  idclientes != '"+"-1"+"'");
                 
                 modelo = new DefaultTableModel(null,titulos);
                 while(rs.next()){

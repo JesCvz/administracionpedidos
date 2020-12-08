@@ -44,7 +44,7 @@ public class Empleados extends javax.swing.JFrame {
                    System.out.println("Se ha establecido una conexion a la base de datos"+"\n"+url);
                
                stmt = con.createStatement();
-               ResultSet rs = stmt.executeQuery("select* from empleados where num_emp != '"+"999999"+"'");
+               ResultSet rs = stmt.executeQuery("select* from empleados");
                
                modelo = new DefaultTableModel(null,titulos);
                
@@ -283,7 +283,7 @@ public void refresh()
                    System.out.println("Se ha establecido una conexion a la base de datos"+"\n"+url);
                
                stmt = con.createStatement();
-               ResultSet rs = stmt.executeQuery("select* from empleados where num_emp != '"+"999999"+"'");
+               ResultSet rs = stmt.executeQuery("select* from empleados");
                
                modelo = new DefaultTableModel(null,titulos);
             

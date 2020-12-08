@@ -254,11 +254,42 @@ public class Pedidos extends javax.swing.JFrame {
                       
                         stmt = con.createStatement();
                         ResultSet rs = stmt.executeQuery("select* from pedidos");
-                            stmt.executeUpdate("INSERT INTO pedidos(`precio_ped`,`fecha_ped`,`empleados_num_emp`,`clientes_idclientes`, `status_ped`) VALUES ('"+"NULL"+"', '"+"2020-12-31"+"', '"+txtemploc.getText()+"', '"+"999999"+"','"+"Pendiente"+"')");
+                            stmt.executeUpdate("INSERT INTO pedidos(`precio_ped`,`fecha_ped`,`empleados_num_emp`,`clientes_idclientes`, `status_ped`) VALUES ('"+"NULL"+"', '"+"2020-12-31"+"', '"+txtemploc.getText()+"', '"+"-1"+"','"+"Pendiente"+"')");
                             System.out.println("Los valores han sido agregados a la base de datos");              
                 
             }catch(InstantiationException|IllegalAccessException|ClassNotFoundException|SQLException ex){
-            Logger.getLogger(RegistrosPed.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            finally{
+                if(con != null){
+                    try{
+                        con.close();
+                        stmt.close();
+                    }catch (SQLException e){
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+        
+        
+     }
+           
+            public void VerificarCosto()
+     {
+            try{
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
+                con = DriverManager.getConnection(url,usuario,contraseña);
+                if(con!=null)
+                    System.out.println("Se ha establecido una conexión con la base de datos"+
+                    "\n"+url);
+                        stmt = con.createStatement();
+                            stmt.executeUpdate("CALL verificar_costos");
+                            System.out.println("VALORES VERIFICADOS");              
+                
+            }catch(InstantiationException|IllegalAccessException|ClassNotFoundException|SQLException ex){
         }
             finally{
                 if(con != null){
@@ -282,6 +313,7 @@ public class Pedidos extends javax.swing.JFrame {
         tabla_ped = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         txtemploc = new javax.swing.JTextField();
+        refreshtotal = new javax.swing.JButton();
         refresh = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         txtidpedloc = new javax.swing.JTextField();
@@ -357,6 +389,14 @@ public class Pedidos extends javax.swing.JFrame {
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 370, 109, 30));
         getContentPane().add(txtemploc, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 200, 83, -1));
 
+        refreshtotal.setText("Actualizar Costo");
+        refreshtotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshtotalActionPerformed(evt);
+            }
+        });
+        getContentPane().add(refreshtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 160, 120, 40));
+
         refresh.setText("Refresh");
         refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -412,6 +452,7 @@ public class Pedidos extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
             String cadena3 = txtemploc.getText();
             registrarNuevoPedido();
+            refresh();
        if(RP.isVisible()==true)
         {
             RP.dispose();
@@ -456,6 +497,13 @@ int car = evt.getKeyCode();
         }        // TODO add your handling code here:
     }//GEN-LAST:event_tabla_pedKeyPressed
 
+    private void refreshtotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshtotalActionPerformed
+    VerificarCosto();
+    refresh();
+    
+    // TODO add your handling code here:
+    }//GEN-LAST:event_refreshtotalActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -499,6 +547,7 @@ int car = evt.getKeyCode();
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JButton refresh;
+    public static javax.swing.JButton refreshtotal;
     private javax.swing.JTable tabla_ped;
     public static javax.swing.JTextField txtemploc;
     private javax.swing.JTextField txtfechaloc;

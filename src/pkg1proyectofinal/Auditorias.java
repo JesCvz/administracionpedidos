@@ -19,8 +19,8 @@ public class Auditorias extends javax.swing.JFrame {
 
    Connection con = null;
    Statement stmt = null;
-   String titulos[] = {"ID","Numero de Cliente","Numero de Empleado","Fecha Modificada", "Movimiento"};
-   String fila[] = new String [5];
+   String titulos[] = {"ID","Numero de Cliente","Nombre de Cliente","Numero de Empleado","Nombre de Empleado","Fecha Modificada", "Movimiento"};
+   String fila[] = new String [7];
    DefaultTableModel modelo;
    RegistrosEmp RE = new RegistrosEmp();
     TableRowSorter trs;
@@ -44,7 +44,7 @@ public class Auditorias extends javax.swing.JFrame {
                    System.out.println("Se ha establecido una conexion a la base de datos"+"\n"+url);
                
                stmt = con.createStatement();
-               ResultSet rs = stmt.executeQuery("select* from auditar_pedidos order by fecha desc;");
+               ResultSet rs = stmt.executeQuery("SELECT * FROM vista_auditorias");
                
                modelo = new DefaultTableModel(null,titulos);
                
@@ -53,9 +53,11 @@ public class Auditorias extends javax.swing.JFrame {
                    
                    fila[0] = rs.getString("idauditar_pedidos");
                    fila[1] = rs.getString("idclientes");
-                   fila[2] = rs.getString("num_emp");
-                   fila[3] = rs.getString("fecha");
-                   fila[4] = rs.getString("movimiento");
+                   fila[2] = rs.getString("nom_cli");
+                   fila[3] = rs.getString("num_emp");
+                   fila[4] = rs.getString("nom_emp");
+                   fila[5] = rs.getString("fecha");
+                   fila[6] = rs.getString("movimiento");
                    
                    
                    modelo.addRow(fila);     
@@ -63,7 +65,9 @@ public class Auditorias extends javax.swing.JFrame {
                tabla_emp.setModel(modelo);
                 TableColumn ci = tabla_emp.getColumn("ID");
                 TableColumn cn = tabla_emp.getColumn("Numero de Cliente");
+                TableColumn cnom = tabla_emp.getColumn("Nombre de Cliente");
                 TableColumn cd = tabla_emp.getColumn("Numero de Empleado");
+                TableColumn cnome = tabla_emp.getColumn("Nombre de Empleado");
                 TableColumn ca = tabla_emp.getColumn("Fecha Modificada"); 
                 TableColumn fe = tabla_emp.getColumn("Movimiento");
                
@@ -199,16 +203,18 @@ public void refresh()
                    System.out.println("Se ha establecido una conexion a la base de datos"+"\n"+url);
                
                stmt = con.createStatement();
-               ResultSet rs = stmt.executeQuery("select* from auditar_pedidos order by fecha desc;");
+               ResultSet rs = stmt.executeQuery("SELECT * FROM vista_auditorias");
                modelo = new DefaultTableModel(null,titulos);
             
          while(rs.next()) {
                    
-                   fila[0] = rs.getString("idauditar_pedidos");
+             fila[0] = rs.getString("idauditar_pedidos");
                    fila[1] = rs.getString("idclientes");
-                   fila[2] = rs.getString("num_emp");
-                   fila[3] = rs.getString("fecha");
-                   fila[4] = rs.getString("movimiento");
+                   fila[2] = rs.getString("nom_cli");
+                   fila[3] = rs.getString("num_emp");
+                   fila[4] = rs.getString("nom_emp");
+                   fila[5] = rs.getString("fecha");
+                   fila[6] = rs.getString("movimiento");
                    
                    
                    modelo.addRow(fila);     
@@ -216,7 +222,9 @@ public void refresh()
                tabla_emp.setModel(modelo);
                 TableColumn ci = tabla_emp.getColumn("ID");
                 TableColumn cn = tabla_emp.getColumn("Numero de Cliente");
+                TableColumn cnom = tabla_emp.getColumn("Nombre de Cliente");
                 TableColumn cd = tabla_emp.getColumn("Numero de Empleado");
+                TableColumn cnome = tabla_emp.getColumn("Nombre de Empleado");
                 TableColumn ca = tabla_emp.getColumn("Fecha Modificada"); 
                 TableColumn fe = tabla_emp.getColumn("Movimiento");
                 

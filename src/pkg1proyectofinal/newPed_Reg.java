@@ -174,7 +174,6 @@ public class newPed_Reg extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         catch(InstantiationException|IllegalAccessException|ClassNotFoundException ex){
-            Logger.getLogger(RegistrosPed.class.getName()).log(Level.SEVERE,null,ex);
         }
         finally{
             if(rs != null){
@@ -253,7 +252,6 @@ public class newPed_Reg extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         catch(InstantiationException|IllegalAccessException|ClassNotFoundException ex){
-            Logger.getLogger(RegistrosPed.class.getName()).log(Level.SEVERE,null,ex);
         }
         finally{
             if(rs != null){
@@ -355,12 +353,11 @@ public class newPed_Reg extends javax.swing.JFrame {
                       
                         stmt = con.createStatement();
                                                 //id_num,item, desc_pro, precio_pro, id, cantidad, descuentoS
-                        stmt.executeUpdate("INSERT INTO pedidos_has_productos(`pedidos_id_ped`, `productos_item`,`cantidad_pro`, `descuento_pro`) VALUES('"+txtid_num.getText()+"','"+txtitemped.getText()+"','"+1+"','"+0+"')");
+                        stmt.executeUpdate("INSERT INTO pedidos_has_productos(`pedidos_id_ped`, `productos_item`,`cantidad_pro`, `descuento_pro`, `desc_aplicado`) VALUES('"+txtid_num.getText()+"','"+txtitemped.getText()+"','"+1+"','"+0+"','"+"no"+"')");
                         System.out.println("Los valores han sido agregados a la base de datos");
                         
                 
             }catch(InstantiationException|IllegalAccessException|ClassNotFoundException|SQLException ex){
-            Logger.getLogger(RegistrosPed.class.getName()).log(Level.SEVERE, null, ex);
         }
             finally{
                 if(con != null){
@@ -409,13 +406,11 @@ public class newPed_Reg extends javax.swing.JFrame {
                 
                         stmt = con.createStatement();
                         ResultSet rs = stmt.executeQuery("select* from pedidos");
-                        stmt.executeUpdate("UPDATE pedidos SET `precio_ped` =('"+cadena7+"') WHERE id_ped= ('"+txtid_num.getText()+"')");
+                        stmt.executeUpdate("UPDATE pedidos SET `precio_ped` =('"+cadena7+"'),`costover` = ('"+"no"+"') WHERE id_ped= ('"+txtid_num.getText()+"')");
                         System.out.println("Los valores han sido agregados a la base de datos");
-                        javax.swing.JOptionPane.showMessageDialog(this,"Registro exitoso! \n","AVISO!",javax.swing.JOptionPane.INFORMATION_MESSAGE);
                         
                          
             }catch(InstantiationException|IllegalAccessException|ClassNotFoundException|SQLException ex){
-            Logger.getLogger(RegistrosPed.class.getName()).log(Level.SEVERE, null, ex);
         }
             finally{
                 if(con != null){
@@ -532,6 +527,36 @@ public class newPed_Reg extends javax.swing.JFrame {
      } 
     refresh2();
     }
+     
+      public void aplicardescuento()
+     {
+            try{
+                     Login LG = new Login();
+                    String url = LG.url;
+                    String usuario = LG.usuario;
+                    String contraseña = LG.contraseña; 
+                    Class.forName(LG.driver).newInstance();
+                con = DriverManager.getConnection(url,usuario,contraseña);
+                if(con!=null)
+                    System.out.println("Se ha establecido una conexión con la base de datos"+
+                    "\n"+url);
+                        stmt = con.createStatement();
+                            stmt.executeUpdate("CALL aplicar_descuentos");
+                            System.out.println("Descuentos disponibles aplicados");              
+                
+            }catch(InstantiationException|IllegalAccessException|ClassNotFoundException|SQLException ex){
+        }
+            finally{
+                if(con != null){
+                    try{
+                        con.close();
+                        stmt.close();
+                    }catch (SQLException e){
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+     }
 
     
      public void limpiar()
@@ -566,11 +591,11 @@ public class newPed_Reg extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla_cot = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtnomloc = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -628,22 +653,22 @@ public class newPed_Reg extends javax.swing.JFrame {
         getContentPane().add(txtfechaped, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 160, 30));
 
         txtsumach.setEditable(false);
-        getContentPane().add(txtsumach, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 460, 100, 30));
+        getContentPane().add(txtsumach, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 410, 100, 30));
 
         txtsumaef.setEditable(false);
-        getContentPane().add(txtsumaef, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 360, 100, 30));
+        getContentPane().add(txtsumaef, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 310, 100, 30));
 
         txtsumatc.setEditable(false);
-        getContentPane().add(txtsumatc, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 410, 100, -1));
+        getContentPane().add(txtsumatc, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 360, 100, -1));
 
         jLabel5.setText("Total con T/Credito:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 390, 120, 20));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 340, 120, 20));
 
         jLabel6.setText("Total con cheque:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 440, 110, 20));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 390, 110, 20));
 
         jLabel4.setText("Total Efectivo:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 340, 100, 20));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 290, 100, 20));
 
         jButton6.setText("Eliminar Articulos");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -651,15 +676,7 @@ public class newPed_Reg extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 270, 120, 30));
-
-        jButton5.setText("Confirmar Datos");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 200, 120, 30));
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 240, 120, 30));
 
         jButton2.setText("Agregar Articulos");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -667,7 +684,7 @@ public class newPed_Reg extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 240, 120, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 210, 120, -1));
 
         tabla_cot.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -696,6 +713,14 @@ public class newPed_Reg extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 10, 110, -1));
+
+        jButton5.setText("Aplicar Descuentos");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 470, 120, 30));
 
         jLabel3.setText("Nombre del negocio:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, -1, 20));
@@ -778,7 +803,7 @@ public class newPed_Reg extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 540, 120, 20));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 510, 120, 30));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/TABLAS.png"))); // NOI18N
         jLabel11.setText("jLabel11");
@@ -872,9 +897,8 @@ public class newPed_Reg extends javax.swing.JFrame {
     }//GEN-LAST:event_txtemplocActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-//      
- //   refresh1();
- //   refresh2();
+    aplicardescuento();
+    refresh2();// TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
